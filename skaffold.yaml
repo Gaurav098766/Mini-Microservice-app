@@ -1,0 +1,59 @@
+apiVersion: skaffold/v2alpha3
+kind: Config
+deploy:
+  kubectl:
+    manifests:
+      - ./infra/k8s/*
+build:
+  local:
+    push: false
+  artifacts:
+    - image: fifapes123/client
+      context: client
+      docker: 
+        dockerfile: Dockerfile
+      sync: 
+        manual:
+          - src: 'src/**/*.js'
+            dest: .
+    - image: fifapes123/comments
+      context: comments
+      docker: 
+        dockerfile: Dockerfile
+      sync: 
+        manual:
+          - src: '*.js'
+            dest: .
+    - image: fifapes123/event-bus
+      context: event-bus
+      docker: 
+        dockerfile: Dockerfile
+      sync: 
+        manual:
+          - src: '*.js'
+            dest: .
+    - image: fifapes123/moderation
+      context: moderation
+      docker: 
+        dockerfile: Dockerfile
+      sync: 
+        manual:
+          - src: '*.js'
+            dest: .
+    - image: fifapes123/posts
+      context: posts
+      docker: 
+        dockerfile: Dockerfile
+      sync: 
+        manual:
+          - src: '*.js'
+            dest: .
+    - image: fifapes123/query
+      context: query
+      docker: 
+        dockerfile: Dockerfile
+      sync: 
+        manual:
+          - src: '*.js'
+            dest: .
+        
